@@ -1,6 +1,6 @@
 # Sort Hosts
 
-A Visual Code Extension.
+A Visual Studio Code Extension.
 Sort hostnames by top-level domain, second-level domain ...
 
 ## Example
