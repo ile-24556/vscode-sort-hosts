@@ -24,7 +24,7 @@ function sortSelectedLines() {
 
 
 function sortLines(editor: vscode.TextEditor, startLine: number, endLine: number) {
-    const lines = loadLines(editor, startLine, endLine);
+    const lines = loadWords(editor, startLine, endLine);
     lines.sort(compareHostnames);
 
     const newline = '\n';
@@ -35,10 +35,10 @@ function sortLines(editor: vscode.TextEditor, startLine: number, endLine: number
 }
 
 
-function loadLines(editor: vscode.TextEditor, startLine: number, endLine: number) {
+function loadWords(editor: vscode.TextEditor, startLine: number, endLine: number) {
     const range = new vscode.Range(startLine, 0, endLine + 1, 0);
     const text = editor.document.getText(range);
-    const lines = text.split('\n');
+    const lines = text.split(/[,;\s\r\n]/);
     const contentLines = lines.filter(line => ! !line);
     return contentLines;
 }
