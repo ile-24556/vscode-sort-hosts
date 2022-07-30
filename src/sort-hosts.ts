@@ -36,15 +36,11 @@ function sortLines(editor: vscode.TextEditor, startLine: number, endLine: number
 
 
 function loadLines(editor: vscode.TextEditor, startLine: number, endLine: number) {
-    const lines: string[] = [];
-    for (let i = startLine; i <= endLine; i++) {
-        const textLine = editor.document.lineAt(i);
-        if (textLine.isEmptyOrWhitespace) {
-            continue;
-        }
-        lines.push(textLine.text);
-    }
-    return lines;
+    const range = new vscode.Range(startLine, 0, endLine + 1, 0);
+    const text = editor.document.getText(range);
+    const lines = text.split('\n');
+    const contentLines = lines.filter(line => ! !line);
+    return contentLines;
 }
 
 
