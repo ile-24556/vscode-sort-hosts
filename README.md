@@ -25,6 +25,6 @@ www.example.org
 ## Usage
 
 1.  Select lines.
-    If no text is selected, all lines are sorted.
+    If no line is selected, the entire text is covered.
 2.  Press Ctrl+Shift+P or F1 to show *Command Palett*.
 3.  Execute **Sort Hosts**.
