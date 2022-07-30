@@ -1,22 +1,29 @@
 # Sort Hosts
 
-Visual Code Extension that sorts hostnames.
+Sort hostnames by top-level domain, second-level domain ...
 
-## Features
+## Example
 
-Sort hostname lines by top-level domain, second-level domain ...
+Input:
+```text
+www.example.net,www.example.com
+example.com;example.org
+www.example.org example.net
+```
 
-Example:
-1.  `example.com`
-2.  `www.example.com`
-3.  `example.net`
-4.  `www.example.net`
-5.  `example.org`
-6.  `www.example.org`
+Output:
+```text
+example.com
+www.example.com
+example.net
+www.example.net
+example.org
+www.example.org
+```
 
 ## Usage
 
 1.  Select lines.
     If no text is selected, all lines are sorted.
 2.  Press Ctrl+Shift+P or F1 to show *Command Palett*.
-3.  Execute "Sort Hosts".
+3.  Execute **Sort Hosts**.
