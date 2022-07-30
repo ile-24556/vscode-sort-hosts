@@ -1,5 +1,6 @@
 # Sort Hosts
 
+A Visual Code Extension.
 Sort hostnames by top-level domain, second-level domain ...
 
 ## Example
