@@ -38,7 +38,7 @@ function sortLines(editor: vscode.TextEditor, startLine: number, endLine: number
 function loadWords(editor: vscode.TextEditor, startLine: number, endLine: number) {
     const range = new vscode.Range(startLine, 0, endLine + 1, 0);
     const text = editor.document.getText(range);
-    const splitters = /[,;\s\r\n]/;
+    const splitters = /[,;\s]/;
     const lines = text.split(splitters);
     const contentLines = lines.filter(word => word);
     return contentLines;
