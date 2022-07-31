@@ -1,8 +1,9 @@
 {
   "name": "sort-hosts",
   "displayName": "Sort Hosts",
-  "description": "Sort hostnames and IP addresses.",
-  "version": "0.1.0",
+  "description": "Sort hostnames.",
+  "version": "0.1.1",
+  "publisher": "ile-24556",
   "engines": {
     "vscode": "^1.69.0"
   },
@@ -42,6 +43,8 @@
     "typescript": "^4.7.4",
     "@vscode/test-electron": "^2.1.5"
   },
-  "repository": "https://github.com/ile-24556/vscode-sort-lines",
-  "publisher": "ile-24556"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ile-24556/vscode-sort-hosts"
+  }
 }
