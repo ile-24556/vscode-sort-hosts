@@ -1,20 +1,26 @@
 {
   "name": "sort-hosts",
   "displayName": "Sort Hosts",
-  "description": "Sort hostnames.",
   "version": "0.1.1",
-  "publisher": "ile-24556",
-  "license": "SEE LICENSE IN LICENSE.txt",
-  "engines": {
-    "vscode": "^1.69.0"
-  },
+  "description": "Sort hostnames.",
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onCommand:sort-hosts.sort"
-  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ile-24556/vscode-sort-hosts"
+  },
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "publisher": "ile-24556",
   "main": "./out/extension.js",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "pretest": "npm run compile && npm run lint",
+    "test": "node ./out/test/runTest.js",
+    "vscode:prepublish": "npm run compile",
+    "watch": "tsc -watch -p ./"
+  },
   "contributes": {
     "commands": [
       {
@@ -23,29 +29,23 @@
       }
     ]
   },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
+  "activationEvents": [
+    "onCommand:sort-hosts.sort"
+  ],
   "devDependencies": {
-    "@types/vscode": "^1.69.0",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.69.0",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
     "eslint": "^8.20.0",
     "glob": "^8.0.3",
     "mocha": "^10.0.0",
-    "typescript": "^4.7.4",
-    "@vscode/test-electron": "^2.1.5"
+    "typescript": "^4.7.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ile-24556/vscode-sort-hosts"
+  "engines": {
+    "vscode": "^1.69.0"
   }
 }
