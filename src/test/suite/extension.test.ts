@@ -19,10 +19,7 @@ suite('Extension Test Suite', () => {
 
 	test('Known values', () => {
 		for (let pair of knownValues) {
-			const input = pair[0];
-			if (!input) {
-				return;
-			}
+			const input = pair[0]!;
 			const correctAnswer = pair[1];
 			assert.deepStrictEqual(input.sort(compareHostnames), correctAnswer);
 		}
