@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 
-function sortSelectedLines() {
+export function sortSelectedLines() {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
         return undefined;
@@ -55,6 +55,3 @@ function compareHostnames(a: string, b: string) {
 function reverseDomainLabels(hostname: string) {
     return hostname.split('.').reverse();
 }
-
-
-export const sortHosts = () => sortSelectedLines();
