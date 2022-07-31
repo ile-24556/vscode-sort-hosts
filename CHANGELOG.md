@@ -1,0 +1,5 @@
+# Change Log
+
+## [Unreleased] 0.1.0 - 2022-07-31
+
+- Initial release. Just sorting hostnames.
