@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 export function sortSelectedLines() {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
-        return undefined;
+        return;
     }
 
     const selection = editor.selection;
@@ -12,11 +12,11 @@ export function sortSelectedLines() {
     if (selection.isEmpty) {
         const startLine = 0;
         const endLine = editor.document.lineCount - 1;
-        sortLines(editor, startLine, endLine);
+        return sortLines(editor, startLine, endLine);
     }
 
     if (selection.isSingleLine) {
-        return undefined;
+        return;
     }
 
     return sortLines(editor, selection.start.line, selection.end.line);
