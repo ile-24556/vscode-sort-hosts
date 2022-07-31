@@ -10,15 +10,19 @@ import { compareHostnames } from '../../sort-hosts';
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
-	const knownValues = [
+	const knownCases = [
 		[
 			['b.a', 'b.b', 'a.a', '.a', 'a.', 'a.b',],
 			['a.', '.a', 'a.a', 'b.a', 'a.b', 'b.b',]
 		],
+		[
+			['almond.eg.com', 'eg.com', 'accounts.eg.com', '.eg.com',],
+			['eg.com', '.eg.com', 'accounts.eg.com', 'almond.eg.com',]
+		],
 	];
 
 	test('Known values', () => {
-		for (let pair of knownValues) {
+		for (let pair of knownCases) {
 			const input = pair[0]!;
 			const correctAnswer = pair[1];
 			assert.deepStrictEqual(input.sort(compareHostnames), correctAnswer);
