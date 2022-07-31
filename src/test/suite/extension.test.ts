@@ -5,8 +5,28 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 // import * as myExtension from '../../extension';
 
+import { compareHostnames } from '../../sort-hosts';
+
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
+
+	const knownValues = [
+		[
+			['b.a', 'b.b', 'a.a', '.a', 'a.', 'a.b',],
+			['a.', '.a', 'a.a', 'b.a', 'a.b', 'b.b',]
+		],
+	];
+
+	test('Known values', () => {
+		for (let pair of knownValues) {
+			const input = pair[0];
+			if (!input) {
+				return;
+			}
+			const correctAnswer = pair[1];
+			assert.deepStrictEqual(input.sort(compareHostnames), correctAnswer);
+		}
+	});
 
 	test('Sample test', () => {
 		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
