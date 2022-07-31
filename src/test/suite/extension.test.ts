@@ -8,29 +8,29 @@ import * as vscode from 'vscode';
 import { compareHostnames } from '../../sort-hosts';
 
 suite('Extension Test Suite', () => {
-	vscode.window.showInformationMessage('Start all tests.');
+    vscode.window.showInformationMessage('Start all tests.');
 
-	const knownCases = [
-		[
-			['b.a', 'b.b', 'a.a', '.a', 'a.', 'a.b',],
-			['a.', '.a', 'a.a', 'b.a', 'a.b', 'b.b',]
-		],
-		[
-			['almond.eg.com', 'eg.com', 'accounts.eg.com', '.eg.com',],
-			['eg.com', '.eg.com', 'accounts.eg.com', 'almond.eg.com',]
-		],
-	];
+    const knownCases = [
+        [
+            ['b.a', 'b.b', 'a.a', '.a', 'a.', 'a.b',],
+            ['a.', '.a', 'a.a', 'b.a', 'a.b', 'b.b',]
+        ],
+        [
+            ['almond.eg.com', 'eg.com', 'accounts.eg.com', '.eg.com',],
+            ['eg.com', '.eg.com', 'accounts.eg.com', 'almond.eg.com',]
+        ],
+    ];
 
-	test('Known values', () => {
-		for (let pair of knownCases) {
-			const input = pair[0]!;
-			const correctAnswer = pair[1];
-			assert.deepStrictEqual(input.sort(compareHostnames), correctAnswer);
-		}
-	});
+    test('Known values', () => {
+        for (let pair of knownCases) {
+            const input = pair[0]!;
+            const correctAnswer = pair[1];
+            assert.deepStrictEqual(input.sort(compareHostnames), correctAnswer);
+        }
+    });
 
-	test('Sample test', () => {
-		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-		assert.strictEqual(-1, [1, 2, 3].indexOf(0));
-	});
+    test('Sample test', () => {
+        assert.strictEqual(-1, [1, 2, 3].indexOf(5));
+        assert.strictEqual(-1, [1, 2, 3].indexOf(0));
+    });
 });
