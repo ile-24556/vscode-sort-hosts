@@ -45,7 +45,7 @@ function loadWords(editor: vscode.TextEditor, startLine: number, endLine: number
 }
 
 
-function compareHostnames(a: string, b: string) {
+export function compareHostnames(a: string, b: string) {
     if (reverseDomainLabels(a) < reverseDomainLabels(b)) { return -1; }
     if (reverseDomainLabels(a) > reverseDomainLabels(b)) { return 1; }
     return 0;
