@@ -73,6 +73,29 @@ function reverseDomainLabels(hostname: string) {
 }
 
 
+function isValidHostname(hostname: string) {
+    if (hostname.length > 255) {
+        return false;
+    }
+    const period = '.';
+    const labels = hostname.split(period);
+    for (const label of labels) {
+        if (!isValidHostnameLabel(label)) {
+            break;
+        }
+    }
+}
+
+
+function isValidHostnameLabel(label: string) {
+    if (label.length < 1 || label.length > 63) {
+        return false;
+    }
+    const validLabelPattern = /^([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])$/;
+    return validLabelPattern.test(label);
+}
+
+
 function loadWords(editor: vscode.TextEditor, range: vscode.Range) {
     const text = editor.document.getText(range);
     const splitters = /[,;\s]/;
