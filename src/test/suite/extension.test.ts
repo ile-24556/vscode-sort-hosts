@@ -9,11 +9,19 @@ suite('Extension Test Suite', () => {
     const knownCases = [
         [
             ['b.a', 'b.b', 'a.a', '.a', 'a.', 'a.b',],
-            ['a.', '.a', 'a.a', 'b.a', 'a.b', 'b.b',]
+            ['a.a', 'b.a', 'a.b', 'b.b', 'a.', '.a',]
         ],
         [
             ['almond.eg.com', 'eg.com', 'accounts.eg.com', '.eg.com',],
-            ['eg.com', '.eg.com', 'accounts.eg.com', 'almond.eg.com',]
+            ['eg.com', 'accounts.eg.com', 'almond.eg.com', '.eg.com',]
+        ],
+        [
+            ['10.0.0.0', '9.99.99.99', '9.100.0.0.0', '0.0.0.0', '255.255.255.255',],
+            ['0.0.0.0', '9.99.99.99', '9.100.0.0.0', '10.0.0.0', '255.255.255.255',]
+        ],
+        [
+            ['255.255.255.com', '255.255.255.255', '-a.com',],
+            ['255.255.255.com', '255.255.255.255', '-a.com',]
         ],
     ];
 
