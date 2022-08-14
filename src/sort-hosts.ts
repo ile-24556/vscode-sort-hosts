@@ -10,38 +10,31 @@ export function sortSelectedLines() {
     const selection = editor.selection;
 
     if (selection.isEmpty) {
-        const startLine = 0;
-        const endLine = editor.document.lineCount - 1;
-        return sortLines(editor, startLine, endLine);
+        const start = new vscode.Position(0, 0);
+        const end = new vscode.Position(editor.document.lineCount, 0);
+        const wholeRange = new vscode.Range(start, end);
+        return sortLines(editor, wholeRange);
     }
-
+    const range = extendRangeToFullLines(selection);
     if (selection.isSingleLine) {
         return;
     }
 
-    return sortLines(editor, selection.start.line, selection.end.line);
+    return sortLines(editor, range);
 }
 
 
-function sortLines(editor: vscode.TextEditor, startLine: number, endLine: number) {
-    const lines = loadWords(editor, startLine, endLine);
+function extendRangeToFullLines(range: vscode.Range) {
+    const extendedRange = new vscode.Range(
+        range.start.line, 0, range.end.line + 1, 0);
+    return extendedRange;
+}
+
+
+function sortLines(editor: vscode.TextEditor, range: vscode.Range) {
+    const lines = loadWords(editor, range);
     lines.sort(compareHostnames);
-
-    const newline = '\n';
-    const sortedText = lines.join(newline) + newline;
-
-    const replaceRange = new vscode.Range(startLine, 0, endLine + 1, 0);
-    editor.edit(editBuilder => editBuilder.replace(replaceRange, sortedText));
-}
-
-
-function loadWords(editor: vscode.TextEditor, startLine: number, endLine: number) {
-    const range = new vscode.Range(startLine, 0, endLine + 1, 0);
-    const text = editor.document.getText(range);
-    const splitters = /[,;\s]/;
-    const words = text.split(splitters);
-    const nonemptyWords = words.filter(word => word);
-    return nonemptyWords;
+    dumpLines(editor, range, lines);
 }
 
 
@@ -54,4 +47,18 @@ export function compareHostnames(a: string, b: string) {
 
 function reverseDomainLabels(hostname: string) {
     return hostname.split('.').reverse();
+}
+
+function loadWords(editor: vscode.TextEditor, range: vscode.Range) {
+    const text = editor.document.getText(range);
+    const splitters = /[,;\s]/;
+    const lines = text.split(splitters);
+    const nonemptyLines = lines.filter(word => word);
+    return nonemptyLines;
+}
+
+function dumpLines(editor: vscode.TextEditor, range: vscode.Range, lines: string[]) {
+    const newline = '\n';
+    const text = lines.join(newline) + newline;
+    editor.edit(editBuilder => editBuilder.replace(range, text));
 }
