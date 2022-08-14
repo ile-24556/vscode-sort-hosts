@@ -52,26 +52,38 @@ export function sort(words: string[]) {
 
 
 function compareHostnames(a: Host, b: Host) {
-    if (a.sortKey < b.sortKey) { return -1; }
-    if (a.sortKey > b.sortKey) { return 1; }
+    if (a.precedence < b.precedence) {
+        return -1;
+    }
+    if (a.precedence > b.precedence) {
+        return 1;
+    }
+    else {
+        if (a.sortKey < b.sortKey) {
+            return -1;
+        }
+        if (a.sortKey > b.sortKey) {
+            return 1;
+        }
+    }
     return 0;
 }
 
 
 class Host {
-    public type: string;
+    public precedence: number;
     public sortKey: string[] | number[] | string;
     constructor(public name: string) {
         if (isValidIpv4Address(name)) {
-            this.type = '1-IPv4Address';
+            this.precedence = 1;
             this.sortKey = numerizeIpv4Address(name);
         }
         else if (isValidHostname(name)) {
-            this.type = '0-hostname';
+            this.precedence = 0;
             this.sortKey = reverseDomainLabels(name);
         }
         else {
-            this.type = '3-other';
+            this.precedence = 2;
             this.sortKey = name;
         }
     }
