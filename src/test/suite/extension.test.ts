@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
-import { compareHostnames } from '../../sort-hosts';
+import { sort } from '../../sort-hosts';
 
 
 suite('Extension Test Suite', () => {
@@ -21,7 +21,7 @@ suite('Extension Test Suite', () => {
         for (let pair of knownCases) {
             const input = pair[0]!;
             const correctAnswer = pair[1];
-            assert.deepStrictEqual(input.sort(compareHostnames), correctAnswer);
+            assert.deepStrictEqual(sort(input), correctAnswer);
         }
     });
 });
