@@ -73,6 +73,32 @@ function reverseDomainLabels(hostname: string) {
 }
 
 
+export function isValidIpv4Address(ipv4Address: string) {
+    const period = '.';
+    const octets = ipv4Address.split(period);
+    for (const octet of octets) {
+        if (!isValidIpv4Octet(octet)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+function isValidIpv4Octet(octet: string) {
+    // Not starts with 0
+    const validOctetPattern = /^[1-9]\d{0,2}$/;
+    if (!validOctetPattern.test(octet)) {
+        return false;
+    }
+    const num = parseInt(octet);
+    if (num > 255) {
+        return false;
+    }
+    return true;
+}
+
+
 export function isValidHostname(hostname: string) {
     if (hostname.length > 255) {
         return false;
