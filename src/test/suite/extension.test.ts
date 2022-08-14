@@ -9,7 +9,7 @@ suite('Extension Test Suite', () => {
     const knownCases = [
         [
             ['b.a', 'b.b', 'a.a', '.a', 'a.', 'a.b',],
-            ['a.a', 'b.a', 'a.b', 'b.b', 'a.', '.a',]
+            ['a.a', 'b.a', 'a.b', 'b.b', '.a', 'a.',]
         ],
         [
             ['almond.eg.com', 'eg.com', 'accounts.eg.com', '.eg.com',],
