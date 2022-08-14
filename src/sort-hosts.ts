@@ -87,7 +87,7 @@ export function isValidIpv4Address(ipv4Address: string) {
 
 function isValidIpv4Octet(octet: string) {
     // Two or more digits octets do not start with 0
-    const validOctetPattern = /^(\d|[1-9]\d{1,2}$)/;
+    const validOctetPattern = /^(\d|[1-9]\d{1,2})$/;
     if (!validOctetPattern.test(octet)) {
         return false;
     }
