@@ -72,11 +72,11 @@ function compareHostnames(a: Host, b: Host) {
 
 class Host {
     public precedence: number;
-    public sortKey: string[] | number[] | string;
+    public sortKey: string[] | string;
     constructor(public name: string) {
         if (isValidIpv4Address(name)) {
             this.precedence = 1;
-            this.sortKey = numerizeIpv4Address(name);
+            this.sortKey = zeroPadIpv4Address(name);
         }
         else if (isValidHostname(name)) {
             this.precedence = 0;
@@ -124,12 +124,12 @@ function isValidIpv4Octet(octet: string) {
 }
 
 
-function numerizeIpv4Address(address: string) {
+function zeroPadIpv4Address(address: string) {
     const period = '.';
     const octets = address.split(period);
-    const nums: number[] = [];
+    const nums: string[] = [];
     for (const octet of octets) {
-        const num = parseInt(octet);
+        const num = ('000' + octet).slice(-3);
         nums.push(num);
     }
     return nums;
