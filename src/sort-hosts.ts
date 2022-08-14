@@ -81,9 +81,10 @@ export function isValidHostname(hostname: string) {
     const labels = hostname.split(period);
     for (const label of labels) {
         if (!isValidHostnameLabel(label)) {
-            break;
+            return false;
         }
     }
+    return true;
 }
 
 
