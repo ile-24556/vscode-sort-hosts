@@ -60,10 +60,20 @@ function compareHostnames(a: Host, b: Host) {
 
 class Host {
     public type: string;
-    public sortKey: string[];
+    public sortKey: string[] | number[] | string;
     constructor(public name: string) {
-        this.type = 'hostname';
-        this.sortKey = reverseDomainLabels(name);
+        if (isValidIpv4Address(name)) {
+            this.type = '1-IPv4Address';
+            this.sortKey = numerizeIpv4Address(name);
+        }
+        else if (isValidHostname(name)) {
+            this.type = '0-hostname';
+            this.sortKey = reverseDomainLabels(name);
+        }
+        else {
+            this.type = '3-other';
+            this.sortKey = name;
+        }
     }
 };
 
@@ -96,6 +106,18 @@ function isValidIpv4Octet(octet: string) {
         return false;
     }
     return true;
+}
+
+
+function numerizeIpv4Address(address: string) {
+    const period = '.';
+    const octets = address.split(period);
+    const nums: number[] = [];
+    for (const octet of octets) {
+        const num = parseInt(octet);
+        nums.push(num);
+    }
+    return nums;
 }
 
 
