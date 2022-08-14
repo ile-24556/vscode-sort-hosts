@@ -49,6 +49,8 @@ suite('Extension Test Suite', () => {
     const invalidIpv4Addresses = [
         '01.0.0.0',
         '192.168.0.256',
+        '192.168.0.0.1',
+        '192.168.1',
     ];
 
     test('Invalid IPv4 addresses', () => {
