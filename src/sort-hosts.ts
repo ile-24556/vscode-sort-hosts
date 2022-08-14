@@ -45,9 +45,20 @@ export function compareHostnames(a: string, b: string) {
 }
 
 
+class Host {
+    public type: string;
+    public sortKey: string[];
+    constructor(public name: string) {
+        this.type = 'hostname';
+        this.sortKey = reverseDomainLabels(name);
+    }
+};
+
+
 function reverseDomainLabels(hostname: string) {
     return hostname.split('.').reverse();
 }
+
 
 function loadWords(editor: vscode.TextEditor, range: vscode.Range) {
     const text = editor.document.getText(range);
@@ -56,6 +67,7 @@ function loadWords(editor: vscode.TextEditor, range: vscode.Range) {
     const nonemptyLines = lines.filter(word => word);
     return nonemptyLines;
 }
+
 
 function dumpLines(editor: vscode.TextEditor, range: vscode.Range, lines: string[]) {
     const newline = '\n';
