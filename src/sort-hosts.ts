@@ -13,14 +13,14 @@ export function sortSelectedLines() {
         const start = new vscode.Position(0, 0);
         const end = new vscode.Position(editor.document.lineCount, 0);
         const wholeRange = new vscode.Range(start, end);
-        return sortLines(editor, wholeRange);
+        return sortWords(editor, wholeRange);
     }
     const range = extendRangeToFullLines(selection);
     if (selection.isSingleLine) {
         return;
     }
 
-    return sortLines(editor, range);
+    return sortWords(editor, range);
 }
 
 
@@ -31,16 +31,29 @@ function extendRangeToFullLines(range: vscode.Range) {
 }
 
 
-function sortLines(editor: vscode.TextEditor, range: vscode.Range) {
-    const lines = loadWords(editor, range);
-    lines.sort(compareHostnames);
-    dumpLines(editor, range, lines);
+function sortWords(editor: vscode.TextEditor, range: vscode.Range) {
+    const words = loadWords(editor, range);
+    const outWords = sort(words);
+    dumpLines(editor, range, outWords);
+}
+
+export function sort(words: string[]) {
+    const hosts: Host[] = [];
+    for (const word of words) {
+        hosts.push(new Host(word));
+    }
+    hosts.sort(compareHostnames);
+    const outWords: string[] = [];
+    for (const host of hosts) {
+        outWords.push(host.name);
+    }
+    return outWords;
 }
 
 
-export function compareHostnames(a: string, b: string) {
-    if (reverseDomainLabels(a) < reverseDomainLabels(b)) { return -1; }
-    if (reverseDomainLabels(a) > reverseDomainLabels(b)) { return 1; }
+function compareHostnames(a: Host, b: Host) {
+    if (a.sortKey < b.sortKey) { return -1; }
+    if (a.sortKey > b.sortKey) { return 1; }
     return 0;
 }
 
