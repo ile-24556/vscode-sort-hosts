@@ -86,6 +86,9 @@ function reverseDomainLabels(hostname: string) {
 export function isValidIpv4Address(ipv4Address: string) {
     const period = '.';
     const octets = ipv4Address.split(period);
+    if (octets.length !== 4) {
+        return false;
+    }
     for (const octet of octets) {
         if (!isValidIpv4Octet(octet)) {
             return false;
