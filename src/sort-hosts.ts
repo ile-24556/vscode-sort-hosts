@@ -73,7 +73,7 @@ function reverseDomainLabels(hostname: string) {
 }
 
 
-function isValidHostname(hostname: string) {
+export function isValidHostname(hostname: string) {
     if (hostname.length > 255) {
         return false;
     }
