@@ -52,20 +52,8 @@ export function sort(words: string[]) {
 
 
 function compareHostnames(a: Host, b: Host) {
-    if (a.precedence < b.precedence) {
-        return -1;
-    }
-    if (a.precedence > b.precedence) {
-        return 1;
-    }
-    else {
-        if (a.sortKey < b.sortKey) {
-            return -1;
-        }
-        if (a.sortKey > b.sortKey) {
-            return 1;
-        }
-    }
+    if (a.sortKey < b.sortKey) { return -1; }
+    if (a.sortKey > b.sortKey) { return 1; }
     return 0;
 }
 
