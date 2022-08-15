@@ -47,5 +47,11 @@
   },
   "engines": {
     "vscode": "^1.69.0"
+  },
+  "__metadata": {
+    "id": "eaa2b21b-84ac-48fc-b6f5-c7e37b06933b",
+    "publisherDisplayName": "ile-24556",
+    "publisherId": "6798e54c-9936-43fa-88d5-a97658825081",
+    "isPreReleaseVersion": false
   }
 }
