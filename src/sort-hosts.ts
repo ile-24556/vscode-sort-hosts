@@ -76,15 +76,15 @@ class Host {
     constructor(public name: string) {
         if (isValidIpv4Address(name)) {
             this.precedence = '1';
-            this.sortKey = zeroPadIpv4Address(name);
+            this.sortKey = [this.precedence].concat(zeroPadIpv4Address(name));
         }
         else if (isValidHostname(name)) {
             this.precedence = '0';
-            this.sortKey = reverseDomainLabels(name);
+            this.sortKey = [this.precedence].concat(reverseDomainLabels(name));
         }
         else {
             this.precedence = '2';
-            this.sortKey = name;
+            this.sortKey = [this.precedence, name];
         }
     }
 };
