@@ -27,6 +27,18 @@ suite('Extension Test Suite', () => {
             ['a.a', 'az.a'],
             ['a.a', 'az.a']
         ],
+        [
+            ['a.a', 'Az.a', 'b.a'],
+            ['a.a', 'Az.a', 'b.a']
+        ],
+        [
+            ['b.a', 'a.a', 'A.a'],
+            ['a.a', 'A.a', 'b.a']
+        ],
+        [
+            ['b.a', 'A.a', 'a.a'],
+            ['A.a', 'a.a', 'b.a']
+        ],
     ];
 
     test('Sort results', () => {

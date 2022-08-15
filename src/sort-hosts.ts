@@ -62,17 +62,18 @@ class Host {
     public precedence: string;
     public sortKey: string;
     constructor(public name: string) {
-        if (isValidIpv4Address(name)) {
+        const lowerName = name.toLowerCase();
+        if (isValidIpv4Address(lowerName)) {
             this.precedence = '1';
-            this.sortKey = this.precedence + zeroPadIpv4Address(name);
+            this.sortKey = this.precedence + zeroPadIpv4Address(lowerName);
         }
-        else if (isValidHostname(name)) {
+        else if (isValidHostname(lowerName)) {
             this.precedence = '0';
-            this.sortKey = this.precedence + reverseDomainLabels(name);
+            this.sortKey = this.precedence + reverseDomainLabels(lowerName);
         }
         else {
             this.precedence = '2';
-            this.sortKey = this.precedence + name;
+            this.sortKey = this.precedence + lowerName;
         }
     }
 };
