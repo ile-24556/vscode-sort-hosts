@@ -71,19 +71,19 @@ function compareHostnames(a: Host, b: Host) {
 
 
 class Host {
-    public precedence: number;
+    public precedence: string;
     public sortKey: string[] | string;
     constructor(public name: string) {
         if (isValidIpv4Address(name)) {
-            this.precedence = 1;
+            this.precedence = '1';
             this.sortKey = zeroPadIpv4Address(name);
         }
         else if (isValidHostname(name)) {
-            this.precedence = 0;
+            this.precedence = '0';
             this.sortKey = reverseDomainLabels(name);
         }
         else {
-            this.precedence = 2;
+            this.precedence = '2';
             this.sortKey = name;
         }
     }
