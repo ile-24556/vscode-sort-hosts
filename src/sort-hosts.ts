@@ -10,48 +10,159 @@ export function sortSelectedLines() {
     const selection = editor.selection;
 
     if (selection.isEmpty) {
-        const startLine = 0;
-        const endLine = editor.document.lineCount - 1;
-        return sortLines(editor, startLine, endLine);
+        const start = new vscode.Position(0, 0);
+        const end = new vscode.Position(editor.document.lineCount, 0);
+        const wholeRange = new vscode.Range(start, end);
+        return sortWords(editor, wholeRange);
     }
-
+    const range = extendRangeToFullLines(selection);
     if (selection.isSingleLine) {
         return;
     }
 
-    return sortLines(editor, selection.start.line, selection.end.line);
+    return sortWords(editor, range);
 }
 
 
-function sortLines(editor: vscode.TextEditor, startLine: number, endLine: number) {
-    const lines = loadWords(editor, startLine, endLine);
-    lines.sort(compareHostnames);
-
-    const newline = '\n';
-    const sortedText = lines.join(newline) + newline;
-
-    const replaceRange = new vscode.Range(startLine, 0, endLine + 1, 0);
-    editor.edit(editBuilder => editBuilder.replace(replaceRange, sortedText));
+function extendRangeToFullLines(range: vscode.Range) {
+    const extendedRange = new vscode.Range(
+        range.start.line, 0, range.end.line + 1, 0);
+    return extendedRange;
 }
 
 
-function loadWords(editor: vscode.TextEditor, startLine: number, endLine: number) {
-    const range = new vscode.Range(startLine, 0, endLine + 1, 0);
-    const text = editor.document.getText(range);
-    const splitters = /[,;\s]/;
-    const words = text.split(splitters);
-    const nonemptyWords = words.filter(word => word);
-    return nonemptyWords;
+function sortWords(editor: vscode.TextEditor, range: vscode.Range) {
+    const words = loadWords(editor, range);
+    const outWords = sort(words);
+    dumpLines(editor, range, outWords);
+}
+
+export function sort(words: string[]) {
+    const hosts: Host[] = [];
+    for (const word of words) {
+        hosts.push(new Host(word));
+    }
+    hosts.sort(compareHostnames);
+    const outWords: string[] = [];
+    for (const host of hosts) {
+        outWords.push(host.name);
+    }
+    return outWords;
 }
 
 
-export function compareHostnames(a: string, b: string) {
-    if (reverseDomainLabels(a) < reverseDomainLabels(b)) { return -1; }
-    if (reverseDomainLabels(a) > reverseDomainLabels(b)) { return 1; }
+function compareHostnames(a: Host, b: Host) {
+    if (a.sortKey < b.sortKey) { return -1; }
+    if (a.sortKey > b.sortKey) { return 1; }
     return 0;
 }
 
 
+class Host {
+    public precedence: string;
+    public sortKey: string;
+    constructor(public name: string) {
+        const lowerName = name.toLowerCase();
+        if (isValidIpv4Address(lowerName)) {
+            this.precedence = '1';
+            this.sortKey = this.precedence + zeroPadIpv4Address(lowerName);
+        }
+        else if (isValidHostname(lowerName)) {
+            this.precedence = '0';
+            this.sortKey = this.precedence + reverseDomainLabels(lowerName);
+        }
+        else {
+            this.precedence = '2';
+            this.sortKey = this.precedence + lowerName;
+        }
+    }
+};
+
+
 function reverseDomainLabels(hostname: string) {
     return hostname.split('.').reverse();
+}
+
+
+export function isValidIpv4Address(ipv4Address: string) {
+    const period = '.';
+    const octets = ipv4Address.split(period);
+    if (octets.length !== 4) {
+        return false;
+    }
+    for (const octet of octets) {
+        if (!isValidIpv4Octet(octet)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+function isValidIpv4Octet(octet: string) {
+    // Two or more digits octets do not start with 0
+    const validOctetPattern = /^(\d|[1-9]\d{1,2})$/;
+    if (!validOctetPattern.test(octet)) {
+        return false;
+    }
+    const num = parseInt(octet);
+    if (num > 255) {
+        return false;
+    }
+    return true;
+}
+
+
+function zeroPadIpv4Address(address: string) {
+    const period = '.';
+    const octets = address.split(period);
+    const nums: string[] = [];
+    for (const octet of octets) {
+        const num = ('000' + octet).slice(-3);
+        nums.push(num);
+    }
+    return nums;
+}
+
+
+export function isValidHostname(hostname: string) {
+    if (hostname.length > 255) {
+        return false;
+    }
+    const period = '.';
+    const labels = hostname.split(period);
+    for (const label of labels) {
+        if (!isValidHostnameLabel(label)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+function isValidHostnameLabel(label: string) {
+    if (label.length < 1 || label.length > 63) {
+        return false;
+    }
+    const validLabelPattern = /^([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])$/;
+    return validLabelPattern.test(label);
+}
+
+
+function loadWords(editor: vscode.TextEditor, range: vscode.Range) {
+    const text = editor.document.getText(range);
+    const splitters = /[,;\s]/;
+    const lines = text.split(splitters);
+    const nonemptyLines = lines.filter(word => word);
+    return nonemptyLines;
+}
+
+
+function dumpLines(editor: vscode.TextEditor, range: vscode.Range, lines: string[]) {
+    let text = '';
+    if (lines.length) {
+        const newline = '\n';
+        text = lines.join(newline) + newline;
+    }
+    editor.edit(editBuilder => editBuilder.replace(range, text));
 }
