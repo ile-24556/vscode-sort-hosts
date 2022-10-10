@@ -11,3 +11,13 @@ Sort hostnames by top-level domain, second-level domain ...
 3.  Execute **Sort Hosts**.
 
 ![Usage animation](images/usage-animation.gif)
+
+## Features
+
+- Commas, semicolons, and whitespace character are treated as separators.
+- Words are sorted by hostname, IPv4 address, and other.
+  - Hostnames are sorted by top-level domain, second-level domain ...
+  - IPv4 addressed are sorted by numbers.
+  - Others are sorted normally.
+- IPv6 addresses are not supported.
+  They are treated as *others* above.
