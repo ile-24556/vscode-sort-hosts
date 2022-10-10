@@ -26,5 +26,5 @@ www.example.org
 
 1.  Select lines.
     If no line is selected, the entire text is covered.
-2.  Press Ctrl+Shift+P or F1 to show *Command Palett*.
+2.  Press Ctrl+Shift+P or F1 to show *Command Palette*.
 3.  Execute **Sort Hosts**.
