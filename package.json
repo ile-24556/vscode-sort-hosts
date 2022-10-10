@@ -48,6 +48,7 @@
   "engines": {
     "vscode": "^1.69.0"
   },
+  "icon": "images/icon.png",
   "__metadata": {
     "id": "eaa2b21b-84ac-48fc-b6f5-c7e37b06933b",
     "publisherDisplayName": "ile-24556",
