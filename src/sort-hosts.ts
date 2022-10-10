@@ -159,7 +159,10 @@ function loadWords(editor: vscode.TextEditor, range: vscode.Range) {
 
 
 function dumpLines(editor: vscode.TextEditor, range: vscode.Range, lines: string[]) {
-    const newline = '\n';
-    const text = lines.join(newline) + newline;
+    let text = '';
+    if (lines.length) {
+        const newline = '\n';
+        text = lines.join(newline) + newline;
+    }
     editor.edit(editBuilder => editBuilder.replace(range, text));
 }
