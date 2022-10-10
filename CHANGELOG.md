@@ -6,6 +6,7 @@
 
 - IPv4 address sorting.
 - Extension icon.
+- Usage animation.
 
 ### Changed
 
