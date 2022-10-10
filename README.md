@@ -1,7 +1,6 @@
 # Sort Hosts
 
-A Visual Studio Code Extension.
-Sort hostnames by top-level domain, second-level domain ...
+A Visual Studio Code Extension to sort hosts.
 
 ## Usage
 
